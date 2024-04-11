@@ -1,24 +1,52 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Login from './components/login';
+import Household from './components/household';
+import Bills from './components/bills';
+
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Button from 'react-bootstrap/Button';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {/* https://react-bootstrap.netlify.app/docs/components/navbar/#home */}
+      <Navbar expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="dark">
+        <Container>
+          <Navbar.Brand href="#home">Housemates App</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/household">Household</Nav.Link>
+              <Nav.Link href="/bills">Bills</Nav.Link>
+              <NavDropdown title="Adding" id="basic-nav-dropdown">
+                <NavDropdown.Item href="/addBill">Add Household</NavDropdown.Item>
+                <NavDropdown.Item href="/addBill">Add Bill</NavDropdown.Item>
+                <NavDropdown.Item href="/addhousemate">Add Housemate</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      
+        {/* <Button href="/login">Login</Button> */}
+        
+      <Routes>
+        {/* <Route path='/' element={<Main></Main>}></Route> */}
+        <Route path='/login' element={<Login></Login>}></Route>
+        <Route path='/household' element={<Household></Household>}></Route>
+        <Route path='/bills' element={<Bills></Bills>}></Route>
+      </Routes>
+
+    </BrowserRouter>
+
   );
 }
 
