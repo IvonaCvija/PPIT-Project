@@ -5,12 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/login';
 import Household from './components/household';
 import Bills from './components/bills';
+import Read from './components/read';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
         {/* <Route path='/' element={<Main></Main>}></Route> */}
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/household' element={<Household></Household>}></Route>
-        <Route path='/bills' element={<Bills></Bills>}></Route>
+        <Route path='/bills' element={<Read></Read>}></Route>
       </Routes>
 
     </BrowserRouter>
