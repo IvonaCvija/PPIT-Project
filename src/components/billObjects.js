@@ -2,16 +2,18 @@ function BillObjects(props) {
 
     return (
         <div>
-            {/* show bill's name */}
-            <h1>{props.myBills.name}</h1>
-             {/* show price  */}
-            <h2>{props.myBills.price}</h2>
+            <br></br>
             {/* show member */}
-            <p>{props.myBills.member}</p>
+            <p>{"Member: " + props.myBills.member}</p>
+            {/* show bill's name */}
+            <p>{"name: " + props.myBills.name}</p>
+             {/* show price  */}
+            <h4>{props.myBills.price + "€"}</h4>
             {/* show status(paid/unpaid) */}
-            <h2>{props.myBills.status}</h2>
+            <h4>{props.myBills.status}</h4>
+            <br></br>
         </div>
     );
 }
-// export BillObjects -->
+// export BillObjects
 export default BillObjects;

@@ -4,14 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Login from './components/login';
 import Household from './components/household';
-import Bills from './components/bills';
+// import Bills from './components/bills';
 import Read from './components/read';
+import AddBill from './components/addBill';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-// import Button from 'react-bootstrap/Button';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -36,14 +36,13 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      
-        {/* <Button href="/login">Login</Button> */}
         
       <Routes>
-        {/* <Route path='/' element={<Main></Main>}></Route> */}
+        <Route path='/' element={<Login></Login>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/household' element={<Household></Household>}></Route>
         <Route path='/bills' element={<Read></Read>}></Route>
+        <Route path='/addBill' element={<AddBill></AddBill>}></Route>
       </Routes>
 
     </BrowserRouter>
