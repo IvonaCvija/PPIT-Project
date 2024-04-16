@@ -25,7 +25,7 @@ function AddBill(){
         name: name,
         price: price,
         member: member,
-        status:status
+        status: status
     }
 
     // make HTTP POST request to server with bill data

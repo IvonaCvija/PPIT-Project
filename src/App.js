@@ -7,6 +7,7 @@ import Household from './components/household';
 // import Bills from './components/bills';
 import Read from './components/read';
 import AddBill from './components/addBill';
+import UpdateBill from './components/updateBill';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -28,9 +29,9 @@ function App() {
               <Nav.Link href="/household">Household</Nav.Link>
               <Nav.Link href="/bills">Bills</Nav.Link>
               <NavDropdown title="Adding" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/addBill">Add Household</NavDropdown.Item>
+                <NavDropdown.Item href="/addHousehold">Add Household</NavDropdown.Item>
                 <NavDropdown.Item href="/addBill">Add Bill</NavDropdown.Item>
-                <NavDropdown.Item href="/addhousemate">Add Housemate</NavDropdown.Item>
+                <NavDropdown.Item href="/addHousemate">Add Housemate</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
@@ -43,6 +44,7 @@ function App() {
         <Route path='/household' element={<Household></Household>}></Route>
         <Route path='/bills' element={<Read></Read>}></Route>
         <Route path='/addBill' element={<AddBill></AddBill>}></Route>
+        <Route path='/updateBill/:id' element ={<UpdateBill></UpdateBill>}></Route>
       </Routes>
 
     </BrowserRouter>

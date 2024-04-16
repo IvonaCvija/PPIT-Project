@@ -11,12 +11,12 @@ function Read(){
         () => {
             // http://jsonblob.com/1229437506201444352 (from https://jsonblob.com)
             // get data from jsonblob with axios (asynchronous operation)
-            axios.get('http://localhost:4000/api/bills')
+            axios.get('http://localhost:4000/api/bill')
                 .then(
                     // callback function handling response, getting entire json data
                     (response) => {
                         // get all data from jsonblob and setn to state
-                        setData(response.data.myBills)
+                        setData(response.data)
                     }
                 )
                 // error message for failed request
@@ -38,21 +38,3 @@ function Read(){
 }
 
 export default Read;
-
-
-
-//array of bills data
-    // const data = [
-    //     {
-    //         "name": "Electricity",
-    //         "price": 40,
-    //         "member": "Ivona",
-    //         "status": "Unpaid"
-    //     },
-    //     {
-    //         "name": "Gas",
-    //         "price": 65.5,
-    //         "member": "Mimi",
-    //         "status": "Paid"
-    //     }        
-    // ];
