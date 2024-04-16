@@ -4,25 +4,26 @@ import{ useEffect, useState} from "react";
 import axios from "axios";
 
 //Read component
-function Read(){
+function Read(){  
     const [data, setData] = useState([]);
+
     useEffect(
         () => {
             // http://jsonblob.com/1229437506201444352 (from https://jsonblob.com)
             // get data from jsonblob with axios (asynchronous operation)
-            axios.get('https://jsonblob.com/api/1229437506201444352')
+            axios.get('http://localhost:4000/api/bills')
                 .then(
                     // callback function handling response, getting entire json data
                     (response) => {
-                        // get all data from jsonblob and set to state
-                        setData(response.data)
+                        // get all data from jsonblob and setn to state
+                        setData(response.data.myBills)
                     }
                 )
                 // error message for failed request
                 .catch(
                     (error) => {
-                        // log the error message to the console
-                        console.log(error);
+                        // log error message to console
+                        console.log('Failed to get bills:', error);
                     }
                 );
         }, [] // the empty array stops the running of the effect after 1 response

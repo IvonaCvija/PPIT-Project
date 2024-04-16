@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from 'react-bootstrap';
+import axios from "axios";
 
 function AddBill(){
     // use useState hook for getting variables name, price, member, status
@@ -17,7 +18,26 @@ function AddBill(){
             " Price: " + price +
             " Member: " + member +
             " Status: " + status);
+    
+
+    // creating bill object from form values
+    const bill = {
+        name: name,
+        price: price,
+        member: member,
+        status:status
     }
+
+    // make HTTP POST request to server with bill data
+    axios.post('http://localhost:4000/api/bill', bill)
+    // handle successful response
+    .then(response => {
+        console.log('Successfully added bill:', response.data);
+    })
+    .catch(error => { // handle error
+        console.error('Error adding bill:', error);
+    });
+}
 
     return (
         <div>
@@ -28,7 +48,7 @@ function AddBill(){
 
                 {/* getting input for name */}
                 <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="text" id="formBill" class="form-control"
+                    <input type="text" id="formBillName" class="form-control"
                         placeholder="Electricity January/ Gas 20th May/ Cleaning supplies" 
                         value={name}
                         onChange={(e) => { setName(e.target.value) }}/>
@@ -37,7 +57,7 @@ function AddBill(){
 
                 {/* getting input for price */}
                 <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="text" id="formBill" class="form-control"
+                    <input type="text" id="formBillPrice" class="form-control"
                         placeholder="Price" 
                         value={price}
                         onChange={(e) => { setPrice(e.target.value) }}/>
@@ -46,7 +66,7 @@ function AddBill(){
 
                 {/* getting input for member's name */}
                 <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="text" id="formBill" class="form-control"
+                    <input type="text" id="formBillMember" class="form-control"
                         placeholder="Member's name" 
                         value={member}
                         onChange={(e) => { setMember(e.target.value) }}/>
@@ -55,7 +75,7 @@ function AddBill(){
 
                 {/* getting input for bill status */}
                 <div data-mdb-input-init class="form-outline mb-4">
-                    <input type="text" id="formBill" class="form-control"
+                    <input type="text" id="formBillStatus" class="form-control"
                         placeholder="Paid/Unpaid" 
                         value={status}
                         onChange={(e) => { setStatus(e.target.value) }}/>
@@ -64,7 +84,7 @@ function AddBill(){
                
                 {/* button for submitting data */}
                 <div>
-                    <Button type="submit">Add bill</Button>
+                    <Button type="submit" value="ADD">Add bill</Button>
                 </div>
 
             </form>
