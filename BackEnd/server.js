@@ -34,7 +34,8 @@ const billSchema = new mongoose.Schema({
     name:String,
     price:Number,
     member:String,
-    status:String
+    status:String,
+    householdCode:String
 })
 
 // create bill model based on bill schema(using "bill" table) 
@@ -60,7 +61,7 @@ app.put('/api/bill/:id', async (req,res)=>{
 
     console.log("Update: "+req.params.id);
 
-    //await so it changes it only after finding the bill
+    // await so it changes it only after finding the bill
     let bill = await billModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
     res.send(bill);
 })
@@ -75,7 +76,8 @@ app.post('/api/bill', (req, res) => {
         name:req.body.name,
         price:req.body.price,
         member:req.body.member,
-        status:req.body.status
+        status:req.body.status,
+        householdCode:req.body.householdCode
     })
     .then(() =>{res.send("Bill created")})
     .catch((error) => {
@@ -92,12 +94,23 @@ app.get(`/api/bill/:id`, async (req, res)=>{
     res.send(bill);
 })
 
-// GET request to '/api/bill'
+// GET request to '/api/bill' get bills for specific member
 app.get('/api/bill', async (req, res) => {
+    const memberName = req.query.member; // get member name from query
+    let query = {};
+    if (memberName) {
+        query.member = memberName; // find by member
+    }
 
-    let bill = await billModel.find({});
-    res.json(bill);
-})
+    // fetch bills based on the constructed query
+    let bills = await billModel.find(query); 
+    res.json(bills);
+});
+// app.get('/api/bill', async (req, res) => {
+
+//     let bill = await billModel.find({});
+//     res.json(bill);
+// })
 
 // app.get('bill', (req, res) => {
 //     // Mock data for bills
