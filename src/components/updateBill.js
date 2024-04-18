@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-export default function UpdateBill(props){
+export default function UpdateBill(props) {
     let { id } = useParams();
     // update arrays useState()
     const [name, setName] = useState("");
@@ -45,7 +45,7 @@ export default function UpdateBill(props){
         axios.put('http://localhost:4000/api/bill/' + id, newBill)
             .then((res) => {
                 console.log(res.data);
-                navigate('/read');
+                navigate('/bills');
             });
     }
     return (
@@ -55,16 +55,16 @@ export default function UpdateBill(props){
                 {/* getting input for name */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Electricity January/ Gas 20th May/ Cleaning supplies" 
+                        placeholder="Electricity January/ Gas 20th May/ Cleaning supplies"
                         value={name}
-                        onChange={(e) => { setName(e.target.value) }}/>
+                        onChange={(e) => { setName(e.target.value) }} />
                     <label>Name</label>
                 </div>
 
                 {/* getting input for price */}
                 <div class="form-group" name="priceInput">
-                <input type="number" step="0.01" class="form-control"
-                        placeholder="Price" 
+                    <input type="number" step="0.01" class="form-control"
+                        placeholder="Price"
                         value={price}
                         onChange={(e) => {
                             const value = e.target.value;
@@ -72,21 +72,21 @@ export default function UpdateBill(props){
                             if (value === "" || /^\d*\.?\d*$/.test(value)) {
                                 setPrice(value);
                             }
-                        }}/>
+                        }} />
                     <label>Price</label>
                 </div>
 
                 {/* getting input for member's name */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Member's name" 
+                        placeholder="Member's name"
                         value={member}
-                        onChange={(e) => { setMember(e.target.value) }}/>
+                        onChange={(e) => { setMember(e.target.value) }} />
                     <label>Member</label>
                 </div>
 
                 {/* getting input for bill status */}
-                <div className="form-group">  
+                <div className="form-group">
                     <select
                         className="form-control"
                         value={status}
@@ -100,12 +100,12 @@ export default function UpdateBill(props){
                 {/* getting input for household code */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Household code" 
+                        placeholder="Household code"
                         value={householdCode}
-                        onChange={(e) => { setHouseholdCode(e.target.value) }}/>
+                        onChange={(e) => { setHouseholdCode(e.target.value) }} />
                     <label>Household code</label>
-                </div>                
-               
+                </div>
+
                 {/* button for submitting data */}
                 <div className="form-group">
                     <input type="submit" value="Update bill" className="btn btn-primary" />
