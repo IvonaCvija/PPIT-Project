@@ -8,9 +8,10 @@ function AddHousehold() {
     const [eircode, setEircode] = useState('');
     const [existingData, setExistingData] = useState({ householdCodes: [], eircodes: [] });
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     useEffect(() => {
-        // making get request *get existing codes to compare()
+        // making GET request to get existing codes to compare
         axios.get('http://localhost:4000/api/household/codes')
             .then(response => {
                 setExistingData({ // mapping household codes and eircodes
@@ -46,12 +47,13 @@ function AddHousehold() {
         axios.post('http://localhost:4000/api/household', household)
             // handle successful response
             .then(response => {
-                console.log('Successfully added household:', response.data);
+                setSuccess("Successfully added household.");
+                console.log("Successfully added household:", response.data);
                 window.location.reload();
             })
             .catch(error => {
                 setError(error.response.data);
-                console.error('Error adding household:', error);
+                console.error("Error adding household:", error);
             });
     }
 
@@ -59,8 +61,9 @@ function AddHousehold() {
         <div>
             <h1>New household</h1>
             <br></br>
-            {/* alert for error message https://getbootstrap.com/docs/4.0/components/alerts/ */}
+            {/* alert for error/success message https://getbootstrap.com/docs/4.0/components/alerts/ */}
             {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
             {/* form for adding a new household, invoke onSubmit */}
             <form onSubmit={handleSubmit}>
 

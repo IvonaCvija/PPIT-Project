@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button } from 'react-bootstrap';
+import { useEffect, useState } from "react";
+import { Button, Alert } from 'react-bootstrap';
 import axios from "axios";
 
 function AddAccount() {
@@ -8,10 +8,29 @@ function AddAccount() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [householdCode, setHouseholdCode] = useState('');
+    const [existingPhoneNumbers, setExistingPhoneNumbers] = useState([]);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+
+
+    useEffect(() => {
+        //  making GET request to get existing phone numbers to compare
+        axios.get('http://localhost:4000/api/account/phoneNumbers')
+            .then(response => {
+                setExistingPhoneNumbers(response.data.map(account => account.phoneNumber));
+            })
+            .catch(error => console.error("Error fetching phone numbers:", error));
+    }, []);
 
     // handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        // check if phone number is unique before adding new account
+        if (existingPhoneNumbers.includes(phoneNumber)) {
+            setError("Phone number already exists.");
+            return;
+        }
 
         console.log(
             " Full name: " + fName +
@@ -31,11 +50,13 @@ function AddAccount() {
         axios.post('http://localhost:4000/api/account', account)
             // handle successful response
             .then(response => {
-                console.log('Successfully added account:', response.data);
+                setSuccess("Successfully added account.");
+                console.log("Successfully added account:", response.data);
                 window.location.reload();
             })
             .catch(error => { // handle error
-                console.error('Error adding account:', error);
+                setError(error.response.data);
+                console.error("Error adding account:", error);
             });
     }
 
@@ -43,6 +64,9 @@ function AddAccount() {
         <div>
             <h1>Create account</h1>
             <br></br>
+            {/* alert for error/success message https://getbootstrap.com/docs/4.0/components/alerts/ */}
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
             {/* form for adding a new account, invoke onSubmit */}
             <form onSubmit={handleSubmit}>
 

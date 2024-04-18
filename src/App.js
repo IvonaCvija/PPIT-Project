@@ -35,7 +35,7 @@ function App() {
               <NavDropdown title="Adding" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/addHousehold">Add Household</NavDropdown.Item>
                 <NavDropdown.Item href="/addBill">Add Bill</NavDropdown.Item>
-                <NavDropdown.Item href="/addAccount">Create account</NavDropdown.Item>
+                <NavDropdown.Item href="/addAccount">Create Account</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

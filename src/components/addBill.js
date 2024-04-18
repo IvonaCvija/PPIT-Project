@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import axios from "axios";
 
 function AddBill() {
@@ -9,6 +9,8 @@ function AddBill() {
     const [member, setMember] = useState('');
     const [status, setStatus] = useState('');
     const [householdCode, setHouseholdCode] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     // handle form submission
     const handleSubmit = (e) => {
@@ -35,11 +37,13 @@ function AddBill() {
         axios.post('http://localhost:4000/api/bill', bill)
             // handle successful response
             .then(response => {
-                console.log('Successfully added bill:', response.data);
+                setSuccess("Successfully added bill.");
+                console.log("Successfully added bill:", response.data);
                 window.location.reload();
             })
             .catch(error => { // handle error
-                console.error('Error adding bill:', error);
+                setError("Error adding bill. Bill was not added.");
+                console.error("Error adding bill:", error);
             });
     }
 
@@ -47,6 +51,8 @@ function AddBill() {
         <div>
             <h1>New bill</h1>
             <br></br>
+            {error && <Alert variant="danger">{error}</Alert>}
+            {success && <Alert variant="success">{success}</Alert>}
             {/* form for adding a new bill, invoke onSubmit */}
             <form onSubmit={handleSubmit}>
 

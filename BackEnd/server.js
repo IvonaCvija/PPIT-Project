@@ -21,7 +21,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
-});
+})
 // handling JSON and URL-encoded data
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -100,17 +100,17 @@ app.post('/api/bill', (req, res) => {
         });
 })
 
-// handle POST request to '/api/household' (CREATING UNIQUE HOUSEHOLD)
+// handle POST request to '/api/household' (CREATING UNIQUE HOUSEHOLD(checking householdCode and eircode))
 app.post('/api/household', async (req, res) => {
     const { householdCode, eircode } = req.body;
 
-    try { // checking if the householdCode or eircode already exists https://www.mongodb.com/docs/manual/reference/method/db.collection.findOne/
+    try { // checking if householdCode or eircode already exist https://www.mongodb.com/docs/manual/reference/method/db.collection.findOne/
         const existingHousehold = await householdModel.findOne({
             $or: [{ householdCode }, { eircode }]
         });
 
         if (existingHousehold) { // send error message if they are not unique
-            return res.status(400).send("Household code or eircode already exists.");
+            return res.status(400).send("Household code or eircode already exists. Please enter valid household code and eircode.");
         }
 
         // if values are unique, create new household 
@@ -122,25 +122,35 @@ app.post('/api/household', async (req, res) => {
         console.error("Error adding household:", error);
         res.status(500).send("Household not created");
     }
-});
+})
 
-// handle POST request to '/api/bill' (CREATING ACCOUNT)
-app.post('/api/account', (req, res) => {
-    // Logging the received data to the console
-    console.log(req.body);
+// handle POST request to '/api/bill' (CREATING UNIQUE ACCOUNT(checking phoneNumber))
+app.post('/api/account', async (req, res) => {
+    const { fName, phoneNumber, password, householdCode } = req.body;
 
-    // Sending a response message
-    accountModel.create({
-        fName: req.body.fName,
-        phoneNumber: req.body.phoneNumber,
-        password: req.body.password,
-        householdCode: req.body.householdCode
-    })
-        .then(() => { res.send("Account created") })
-        .catch((error) => {
-            console.error("Error adding account:", error);
-            res.status(500).send("Account not created");
-        });
+    try {
+        // check if phoneNumber already exists
+        const existingAccount = await accountModel.findOne({ phoneNumber });
+
+        if (existingAccount) { // Send error message if phoneNumber is not unique
+            return res.status(400).send("Phone number already exists. Please enter valid phone number.");
+        }
+
+        // check if householdCode exists in the household collection using value of householdCode from householdModel
+        const existingHousehold = await householdModel.findOne({ householdCode });
+        if (!existingHousehold) { 
+            return res.status(400).send("Household with that code does not exist. Please enter valid household code.");
+        }
+
+        // if phoneNumber is unique and householdCode exists, create new account
+        const newAccount = new accountModel({ fName, phoneNumber, password, householdCode });
+        await newAccount.save();
+        res.send("Account created successfully");
+
+    } catch (error) {
+        console.error("Error adding account:", error);
+        res.status(500).send("Account not created");
+    }
 })
 
 // handle GET request to '/api/bill/:id' (FINDING BILL BASED ON ID)
