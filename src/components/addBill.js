@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from 'react-bootstrap';
 import axios from "axios";
 
-function AddBill(){
+function AddBill() {
     // use useState hook for getting variables name, price, member, status, household code
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -20,27 +20,28 @@ function AddBill(){
             " Member: " + member +
             " Status: " + status +
             " Household code: " + householdCode);
-    
 
-    // creating bill object from form values
-    const bill = {
-        name: name,
-        price: price,
-        member: member,
-        status: status,
-        householdCode: householdCode
+
+        // creating bill object from form values
+        const bill = {
+            name: name,
+            price: price,
+            member: member,
+            status: status,
+            householdCode: householdCode
+        }
+
+        // make HTTP POST request to server with bill data
+        axios.post('http://localhost:4000/api/bill', bill)
+            // handle successful response
+            .then(response => {
+                console.log('Successfully added bill:', response.data);
+                window.location.reload();
+            })
+            .catch(error => { // handle error
+                console.error('Error adding bill:', error);
+            });
     }
-
-    // make HTTP POST request to server with bill data
-    axios.post('http://localhost:4000/api/bill', bill)
-    // handle successful response
-    .then(response => {
-        console.log('Successfully added bill:', response.data);
-    })
-    .catch(error => { // handle error
-        console.error('Error adding bill:', error);
-    });
-}
 
     return (
         <div>
@@ -52,16 +53,16 @@ function AddBill(){
                 {/* getting input for name */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Electricity January/ Gas 20th May/ Cleaning supplies" 
+                        placeholder="Electricity January/ Gas 20th May/ Cleaning supplies"
                         value={name}
-                        onChange={(e) => { setName(e.target.value) }}/>
+                        onChange={(e) => { setName(e.target.value) }} />
                     <label>Name</label>
                 </div>
 
                 {/* getting input for price */}
                 <div class="form-group" name="priceInput">
-                <input type="number" step="0.01" class="form-control"
-                        placeholder="Price" 
+                    <input type="number" step="0.01" class="form-control"
+                        placeholder="Price"
                         value={price}
                         onChange={(e) => {
                             const value = e.target.value;
@@ -69,21 +70,21 @@ function AddBill(){
                             if (value === "" || /^\d*\.?\d*$/.test(value)) {
                                 setPrice(value);
                             }
-                        }}/>
+                        }} />
                     <label>Price</label>
                 </div>
 
                 {/* getting input for member's name */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Member's name" 
+                        placeholder="Member's name"
                         value={member}
-                        onChange={(e) => { setMember(e.target.value) }}/>
+                        onChange={(e) => { setMember(e.target.value) }} />
                     <label>Member</label>
                 </div>
 
                 {/* getting input for bill status */}
-                <div className="form-group">  
+                <div className="form-group">
                     <select
                         className="form-control"
                         value={status}
@@ -97,9 +98,9 @@ function AddBill(){
                 {/* getting input for household code */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Household code" 
+                        placeholder="Household code"
                         value={householdCode}
-                        onChange={(e) => { setHouseholdCode(e.target.value) }}/>
+                        onChange={(e) => { setHouseholdCode(e.target.value) }} />
                     <label>Household code</label>
                 </div>
 

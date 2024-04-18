@@ -1,10 +1,10 @@
 // import bills component
 import Bills from "./bills";
-import{ useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 //Read component
-function Read(){  
+function Read() {
     const [data, setData] = useState([]);
 
     useEffect(

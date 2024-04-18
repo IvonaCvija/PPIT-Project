@@ -22,7 +22,6 @@ app.use(function (req, res, next) {
         "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
 // handling JSON and URL-encoded data
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,32 +32,40 @@ app.use(cors());
 
 // Bill schema
 const billSchema = new mongoose.Schema({
-    name:String,
-    price:Number,
-    member:String,
-    status:String,
-    householdCode:String
+    name: String,
+    price: Number,
+    member: String,
+    status: String,
+    householdCode: String
+})
+
+// Household schema
+const householdSchema = new mongoose.Schema({
+    householdCode: String,
+    eircode: String
 })
 
 // create bill model based on bill schema(using "bill" table) 
 const billModel = mongoose.model("bill", billSchema, "bill")
+// create household model based on household schema(using "household" table) 
+const householdModel = mongoose.model("household", householdSchema, "household")
 
-// handle GET request to the root path '/'
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// // handle GET request to the root path '/'
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+// })
 
-// updating existing data in table "bill" using "id"
-app.put('/api/bill/:id', async (req,res)=>{
+// updating existing data in table "bill" using "id" (UPDATING BILL)
+app.put('/api/bill/:id', async (req, res) => {
 
-    console.log("Update: "+req.params.id);
+    console.log("Update: " + req.params.id);
 
     // await so it changes it only after finding the bill
-    let bill = await billModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
+    let bill = await billModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.send(bill);
 })
 
-// deleting existing data in table "bill" using "id"
+// deleting existing data in table "bill" using "id" (DELETING BILL)
 app.delete('/api/bill/:id', async (req, res) => {
     console.log("Delete: " + req.params.id)
 
@@ -67,31 +74,55 @@ app.delete('/api/bill/:id', async (req, res) => {
     res.send(bill);
 })
 
-// handle POST request to '/api/bill'
+// handle POST request to '/api/bill' (CREATING BILL)
 app.post('/api/bill', (req, res) => {
     // Logging the received data to the console
     console.log(req.body);
 
     // Sending a response message
     billModel.create({
-        name:req.body.name,
-        price:req.body.price,
-        member:req.body.member,
-        status:req.body.status,
-        householdCode:req.body.householdCode
+        name: req.body.name,
+        price: req.body.price,
+        member: req.body.member,
+        status: req.body.status,
+        householdCode: req.body.householdCode
     })
-    .then(() =>{res.send("Bill created")})
-    .catch((error) => {
-        console.error('Error adding bill:', error);
-        res.status(500).send("Bill not created");
-    });
+        .then(() => { res.send("Bill created") })
+        .catch((error) => {
+            console.error("Error adding bill:", error);
+            res.status(500).send("Bill not created");
+        });
 })
 
+// handle POST request to '/api/household' (CREATING UNIQUE HOUSEHOLD)
+app.post('/api/household', async (req, res) => {
+    const { householdCode, eircode } = req.body;
 
-app.get(`/api/bill/:id`, async (req, res)=>{
+    try { // checking if the householdCode or eircode already exists https://www.mongodb.com/docs/manual/reference/method/db.collection.findOne/
+        const existingHousehold = await householdModel.findOne({
+            $or: [{ householdCode }, { eircode }]
+        });
+
+        if (existingHousehold) { // send error message if they are not unique
+            return res.status(400).send("Household code or eircode already exists.");
+        }
+
+        // if values are unique, create new household 
+        const newHousehold = new householdModel({ householdCode, eircode });
+        await newHousehold.save();
+        res.send("Household created successfully");
+
+    } catch (error) {
+        console.error("Error adding household:", error);
+        res.status(500).send("Household not created");
+    }
+});
+
+
+app.get(`/api/bill/:id`, async (req, res) => {
     console.log(req.params.id);
 
-    let bill = await billModel.findById({_id:req.params.id})
+    let bill = await billModel.findById({ _id: req.params.id })
     res.send(bill);
 })
 
@@ -114,31 +145,6 @@ app.get('/api/bill', async (req, res) => {
     let bill = await billModel.find({});
     res.json(bill);
 })
-
-// app.get('bill', (req, res) => {
-//     // Mock data for bills
-//     const bills = [
-//             {
-//                 "name": "Electricity",
-//                 "price": 40,
-//                 "member": "Ivona",
-//                 "status": "Unpaid"
-//             },
-//             {
-//                 "name": "Gas",
-//                 "price": 65.5,
-//                 "member": "Mimi",
-//                 "status": "Paid"
-//             }        
-//         ]
-
-//     // Respond with JSON data
-//     res.json({
-//         myBills: bills,
-//         "Message": "Bla bla",
-//         "Disclaimer": "Hello World!"
-//     })
-// }) 
 
 // start Express app, listen on specified port
 app.listen(port, () => {

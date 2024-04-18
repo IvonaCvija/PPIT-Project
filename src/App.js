@@ -4,10 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Login from './components/login';
 import Household from './components/household';
-// import Bills from './components/bills';
+
 import Read from './components/read';
 import AddBill from './components/addBill';
 import UpdateBill from './components/updateBill';
+
+import AddHousehold from './components/addHousehold';
 
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -42,9 +44,12 @@ function App() {
         <Route path='/' element={<Login></Login>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/household' element={<Household></Household>}></Route>
+
         <Route path='/bills' element={<Read></Read>}></Route>
         <Route path='/addBill' element={<AddBill></AddBill>}></Route>
         <Route path='/updateBill/:id' element ={<UpdateBill></UpdateBill>}></Route>
+
+        <Route path='/addHousehold' element={<AddHousehold></AddHousehold>}></Route>
       </Routes>
 
     </BrowserRouter>
