@@ -1,5 +1,7 @@
 // sources: https://mdbootstrap.com/docs/standard/extended/login/
 
+import { Button } from "react-bootstrap";
+
 function Login() {
     return (
         <div>
@@ -48,7 +50,7 @@ function Login() {
 
                                                 <div class="d-flex align-items-center justify-content-center pb-4">
                                                     <p class="mb-0 me-2">Are you not a member yet?</p>
-                                                    <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-danger" href="/addhousemate">Create account</button>
+                                                    <Button variant="btn btn-outline-danger" href="/addAccount">Create account</Button>
                                                 </div>
 
                                             </form>
@@ -61,8 +63,6 @@ function Login() {
                 </div>
             </section >
         </div>
-
-
     )
 }
 

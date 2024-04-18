@@ -11,6 +11,8 @@ import UpdateBill from './components/updateBill';
 
 import AddHousehold from './components/addHousehold';
 
+import AddAccount from './components/addAccount';
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -33,13 +35,13 @@ function App() {
               <NavDropdown title="Adding" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/addHousehold">Add Household</NavDropdown.Item>
                 <NavDropdown.Item href="/addBill">Add Bill</NavDropdown.Item>
-                <NavDropdown.Item href="/createAccount">Create account</NavDropdown.Item>
+                <NavDropdown.Item href="/addAccount">Create account</NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-        
+
       <Routes>
         <Route path='/' element={<Login></Login>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
@@ -47,9 +49,11 @@ function App() {
 
         <Route path='/bills' element={<Read></Read>}></Route>
         <Route path='/addBill' element={<AddBill></AddBill>}></Route>
-        <Route path='/updateBill/:id' element ={<UpdateBill></UpdateBill>}></Route>
+        <Route path='/updateBill/:id' element={<UpdateBill></UpdateBill>}></Route>
 
         <Route path='/addHousehold' element={<AddHousehold></AddHousehold>}></Route>
+
+        <Route path='/addAccount' element={<AddAccount></AddAccount>}></Route>
       </Routes>
 
     </BrowserRouter>

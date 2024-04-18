@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 // enable CORS(Cross-Origin Resource Sharing)
 app.use(cors());
 
-
+//SCHEMAS
 // Bill schema
 const billSchema = new mongoose.Schema({
     name: String,
@@ -45,17 +45,24 @@ const householdSchema = new mongoose.Schema({
     eircode: String
 })
 
+// Account schema
+const accountSchema = new mongoose.Schema({
+    fName: String,
+    phoneNumber: String,
+    password: String,
+    householdCode: String
+})
+
+//MODELS ABSED ON SCHEMAS
 // create bill model based on bill schema(using "bill" table) 
 const billModel = mongoose.model("bill", billSchema, "bill")
 // create household model based on household schema(using "household" table) 
 const householdModel = mongoose.model("household", householdSchema, "household")
+// create account model based on account schema(using "account" table) 
+const accountModel = mongoose.model("account", accountSchema, "account")
 
-// // handle GET request to the root path '/'
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-// })
 
-// updating existing data in table "bill" using "id" (UPDATING BILL)
+// handle PUT request to '/api/bill/:id' (UPDATING BILL BY USING ID)
 app.put('/api/bill/:id', async (req, res) => {
 
     console.log("Update: " + req.params.id);
@@ -65,7 +72,7 @@ app.put('/api/bill/:id', async (req, res) => {
     res.send(bill);
 })
 
-// deleting existing data in table "bill" using "id" (DELETING BILL)
+// handle DELETE request to '/api/bill/:id' (DELETING BILL BY USING ID)
 app.delete('/api/bill/:id', async (req, res) => {
     console.log("Delete: " + req.params.id)
 
@@ -118,7 +125,26 @@ app.post('/api/household', async (req, res) => {
     }
 });
 
+// handle POST request to '/api/bill' (CREATING ACCOUNT)
+app.post('/api/account', (req, res) => {
+    // Logging the received data to the console
+    console.log(req.body);
 
+    // Sending a response message
+    accountModel.create({
+        fName: req.body.fName,
+        phoneNumber: req.body.phoneNumber,
+        password: req.body.password,
+        householdCode: req.body.householdCode
+    })
+        .then(() => { res.send("Account created") })
+        .catch((error) => {
+            console.error("Error adding account:", error);
+            res.status(500).send("Account not created");
+        });
+})
+
+// handle GET request to '/api/bill/:id' (FINDING BILL BASED ON ID)
 app.get(`/api/bill/:id`, async (req, res) => {
     console.log(req.params.id);
 
@@ -139,7 +165,7 @@ app.get(`/api/bill/:id`, async (req, res) => {
 //     res.json(bills);
 // })
 
-// get bills
+// handle GET request to '/api/bill' (FINDING ALL BILLS)
 app.get('/api/bill', async (req, res) => {
 
     let bill = await billModel.find({});

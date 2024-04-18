@@ -67,7 +67,7 @@ function AddHousehold() {
                 {/* getting input for household code */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Household code"
+                        placeholder="Enter household code"
                         value={householdCode}
                         onChange={(e) => { setHouseholdCode(e.target.value) }} />
                     <label>Household code</label>
@@ -76,7 +76,7 @@ function AddHousehold() {
                 {/* getting input for eircode */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Eircode"
+                        placeholder="Enter eircode"
                         value={eircode}
                         onChange={(e) => { setEircode(e.target.value) }} />
                     <label>Address(eircode)</label>

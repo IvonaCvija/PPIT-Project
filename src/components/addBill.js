@@ -62,7 +62,7 @@ function AddBill() {
                 {/* getting input for price */}
                 <div class="form-group" name="priceInput">
                     <input type="number" step="0.01" class="form-control"
-                        placeholder="Price"
+                        placeholder="Enter price"
                         value={price}
                         onChange={(e) => {
                             const value = e.target.value;
@@ -77,7 +77,7 @@ function AddBill() {
                 {/* getting input for member's name */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Member's name"
+                        placeholder="Enter member's name"
                         value={member}
                         onChange={(e) => { setMember(e.target.value) }} />
                     <label>Member</label>
@@ -98,7 +98,7 @@ function AddBill() {
                 {/* getting input for household code */}
                 <div className="form-group">
                     <input type="text" class="form-control"
-                        placeholder="Household code"
+                        placeholder="Enter household code"
                         value={householdCode}
                         onChange={(e) => { setHouseholdCode(e.target.value) }} />
                     <label>Household code</label>
@@ -106,7 +106,7 @@ function AddBill() {
 
                 {/* button for submitting data */}
                 <div>
-                    <Button type="submit" value="ADD">Add bill</Button>
+                    <Button type="submit" value="ADDbill">Add bill</Button>
                 </div>
 
             </form>
