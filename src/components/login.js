@@ -37,7 +37,7 @@ function Login() {
                                                 </div>
 
                                                 <div data-mdb-input-init class="form-outline mb-4">
-                                                    <input type="password" id="formLogin" class="form-control" />
+                                                    <input type="password" class="form-control" autocomplete="off" />
                                                     <label class="form-label" for="formLogin">Password</label>
                                                 </div>
 

@@ -5,7 +5,9 @@ const cors = require('cors');
 const app = express()
 const mongoose = require('mongoose');
 
+// call the main function to connect to MongoDB
 main().catch(err => console.log(err));
+
 // https://www.youtube.com/watch?v=ACUXjXtG8J4
 // connectiong to mongoose local database "householdDatabase"
 async function main() {
@@ -41,16 +43,6 @@ const billSchema = new mongoose.Schema({
 // create bill model based on bill schema(using "bill" table) 
 const billModel = mongoose.model("bill", billSchema, "bill")
 
-// app.get('/getBill', async (req, res) => {
-//     try {
-//         const bills = await billModel.find({});
-//         console.log(bills);
-//         res.json(bills);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// });
-
 // handle GET request to the root path '/'
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -63,6 +55,15 @@ app.put('/api/bill/:id', async (req,res)=>{
 
     // await so it changes it only after finding the bill
     let bill = await billModel.findByIdAndUpdate(req.params.id, req.body, {new:true});
+    res.send(bill);
+})
+
+// deleting existing data in table "bill" using "id"
+app.delete('/api/bill/:id', async (req, res) => {
+    console.log("Delete: " + req.params.id)
+
+    // find and delete bill using "id"
+    let bill = await billModel.findByIdAndDelete(req.params.id);
     res.send(bill);
 })
 
@@ -95,22 +96,24 @@ app.get(`/api/bill/:id`, async (req, res)=>{
 })
 
 // GET request to '/api/bill' get bills for specific member
-app.get('/api/bill', async (req, res) => {
-    const memberName = req.query.member; // get member name from query
-    let query = {};
-    if (memberName) {
-        query.member = memberName; // find by member
-    }
-
-    // fetch bills based on the constructed query
-    let bills = await billModel.find(query); 
-    res.json(bills);
-});
 // app.get('/api/bill', async (req, res) => {
+//     const memberName = req.query.member; // get member name from query
+//     let query = {};
+//     if (memberName) {
+//         query.member = memberName; // find by member
+//     }
 
-//     let bill = await billModel.find({});
-//     res.json(bill);
+//     // fetch bills based on the constructed query
+//     let bills = await billModel.find(query); 
+//     res.json(bills);
 // })
+
+// get bills
+app.get('/api/bill', async (req, res) => {
+
+    let bill = await billModel.find({});
+    res.json(bill);
+})
 
 // app.get('bill', (req, res) => {
 //     // Mock data for bills

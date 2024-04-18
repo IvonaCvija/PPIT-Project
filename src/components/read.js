@@ -28,11 +28,32 @@ function Read(){
                 );
         }, [] // the empty array stops the running of the effect after 1 response
     );
+
+    // reloading data by making another get request
+    const ReloadData = (e) => {
+        axios.get('http://localhost:4000/api/bill')
+            .then(
+                // successful response
+                (response) => {
+                    // update state with data
+                    setData(response.data)
+                }
+            )
+            .catch(
+                // error handling
+                (error) => {
+                    console.log(error);
+                }
+            );
+    }
+
+
     return (
         <div>
             <h1>All bills</h1>
             {/* show combined bills data(myBills(prop)) with bills component */}
-            <Bills myBills={data}></Bills>
+            {/* <Bills myBills={data}></Bills> */}
+            <Bills myBills={data} Reload={ReloadData}></Bills>
         </div>
     );
 }
