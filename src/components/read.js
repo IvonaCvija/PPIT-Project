@@ -15,7 +15,7 @@ function Read() {
                 .then(
                     // callback function handling response, getting entire json data
                     (response) => {
-                        // get all data from jsonblob and setn to state
+                        // get all data from jsonblob and set to state
                         setData(response.data)
                     }
                 )
@@ -29,7 +29,7 @@ function Read() {
         }, [] // the empty array stops the running of the effect after 1 response
     );
 
-    // reloading data by making another get request
+    // reloading data by making another GET request
     const ReloadData = (e) => {
         axios.get('http://localhost:4000/api/bill')
             .then(
@@ -46,7 +46,6 @@ function Read() {
                 }
             );
     }
-
 
     return (
         <div>

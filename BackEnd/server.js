@@ -53,7 +53,7 @@ const accountSchema = new mongoose.Schema({
     householdCode: String
 })
 
-//MODELS ABSED ON SCHEMAS
+//MODELS BASED ON SCHEMAS
 // create bill model based on bill schema(using "bill" table) 
 const billModel = mongoose.model("bill", billSchema, "bill")
 // create household model based on household schema(using "household" table) 
@@ -64,7 +64,6 @@ const accountModel = mongoose.model("account", accountSchema, "account")
 
 // handle PUT request to '/api/bill/:id' (UPDATING BILL BY USING ID)
 app.put('/api/bill/:id', async (req, res) => {
-
     console.log("Update: " + req.params.id);
 
     // await so it changes it only after finding the bill
@@ -170,6 +169,13 @@ app.get('/api/bill', async (req, res) => {
 
     let bill = await billModel.find({});
     res.json(bill);
+})
+
+// handle GET request to '/api/account' (FINDING ALL ACCOUNTS)
+app.get('/api/account', async (req, res) => {
+
+    let account = await accountModel.find({});
+    res.json(account);
 })
 
 // start Express app, listen on specified port

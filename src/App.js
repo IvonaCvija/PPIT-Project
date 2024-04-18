@@ -3,7 +3,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Login from './components/login';
-import Household from './components/household';
 
 import Read from './components/read';
 import AddBill from './components/addBill';
@@ -11,6 +10,7 @@ import UpdateBill from './components/updateBill';
 
 import AddHousehold from './components/addHousehold';
 
+import Household from './components/household';
 import AddAccount from './components/addAccount';
 
 import Container from 'react-bootstrap/Container';
@@ -45,7 +45,6 @@ function App() {
       <Routes>
         <Route path='/' element={<Login></Login>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
-        <Route path='/household' element={<Household></Household>}></Route>
 
         <Route path='/bills' element={<Read></Read>}></Route>
         <Route path='/addBill' element={<AddBill></AddBill>}></Route>
@@ -53,6 +52,7 @@ function App() {
 
         <Route path='/addHousehold' element={<AddHousehold></AddHousehold>}></Route>
 
+        <Route path='/household' element={<Household></Household>}></Route>
         <Route path='/addAccount' element={<AddAccount></AddAccount>}></Route>
       </Routes>
 
