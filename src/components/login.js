@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
 
-    const [householdCode, setHouseholdCode] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -18,18 +17,21 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:4000/api/login', { householdCode, phoneNumber, password });
-            console.log(response.data); // 'Login successful'
-            navigate('/household'); // redirect to household page
+            const response = await axios.post('http://localhost:4000/api/login', { phoneNumber, password });
+            
+            if (response.data && response.data.householdCode) {
+                navigate(`/household/${response.data.householdCode}`);
+            } else {
+                // case where householdCode isn't in response
+                throw new Error('No household code');
+            }
         } catch (error) {
-            setError('Failed to login: ' + error.response.data);
+            setError('Failed to login: ' + (error.response && error.response.data ? error.response.data : 'Unknown error'));
         }
     }
 
     return (
         <div>
-            {/* <h1>Login page</h1> */}
-
 
             <section class="h-100 gradient-form">
                 <div class="container py-5 h-100" style={{ backgroundColor: '#9be8ad' }}>
@@ -49,10 +51,10 @@ function Login() {
                                             <form onSubmit={handleSubmit}>
                                                 <p>Please login to your account</p>
 
-                                                <div data-mdb-input-init class="form-outline mb-4">
+                                                {/* <div data-mdb-input-init class="form-outline mb-4">
                                                     <label class="form-label" for="formLogin">Household :</label>
                                                     <input type="text" value={householdCode} onChange={(e) => setHouseholdCode(e.target.value)} placeholder="Household code" />
-                                                </div>
+                                                </div> */}
 
                                                 <div data-mdb-input-init class="form-outline mb-4">
                                                     <label class="form-label" for="formLogin">Phone number :</label>

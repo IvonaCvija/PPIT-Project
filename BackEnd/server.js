@@ -174,13 +174,13 @@ app.get(`/api/bill/:id`, async (req, res) => {
 //     res.json(bills);
 // })
 
-// handle POST for login
+// handle POST for login (CONFIRM DETAILS AND PASSWORD)
 app.post('/api/login', async (req, res) => {
-    const { householdCode, phoneNumber, password } = req.body;
+    const { phoneNumber, password } = req.body;
 
     try {
-        // look for account that matches the phoneNumber and householdCode
-        const account = await accountModel.findOne({ phoneNumber, householdCode });
+        // look for account that matches the phoneNumber
+        const account = await accountModel.findOne({ phoneNumber });
 
         // check if account exists and password matches
         if (!account || account.password !== password) {
@@ -188,8 +188,11 @@ app.post('/api/login', async (req, res) => {
             return;
         }
 
-        // successful login
-        res.status(200).send('Login successful');
+        // successful login, return householdCode from this account(send to frontend)
+        res.status(200).json({
+            message: 'Login successful',
+            householdCode: account.householdCode // return householdCode value from database
+        });
     } catch (error) {
         console.error("Login error:", error);
         res.status(500).send('Internal server error');
@@ -203,12 +206,32 @@ app.get('/api/bill', async (req, res) => {
     res.json(bill);
 })
 
-// handle GET request to '/api/account' (FINDING ALL ACCOUNTS)
-app.get('/api/account', async (req, res) => {
+// // handle GET request to '/api/account' (FINDING ALL ACCOUNTS)
+// app.get('/api/account', async (req, res) => {
 
-    let account = await accountModel.find({});
-    res.json(account);
-})
+//     let account = await accountModel.find({});
+//     res.json(account);
+// })
+
+// handle GET request to '/api/account' (FINDING ALL ACCOUNTS WITH CERTAIN HOUSEHOLD CODE)
+app.get('/api/account', async (req, res) => {
+    const householdCode = req.query.householdCode;
+
+    try {
+        let accounts;
+        if (householdCode) {
+            // find all accounts with specific householdCode
+            accounts = await accountModel.find({ householdCode });
+        } else {
+            // find all accounts if no householdCode is specified
+            accounts = await accountModel.find({});
+        }
+        res.json(accounts);
+    } catch (error) {
+        console.error("Error getting accounts:", error);
+        res.status(500).send("Failed to get accounts");
+    }
+});
 
 // start Express app, listen on specified port
 app.listen(port, () => {
