@@ -1,8 +1,31 @@
-// sources: https://mdbootstrap.com/docs/standard/extended/login/
+// sources: - https://mdbootstrap.com/docs/standard/extended/login/
+// - https://www.youtube.com/watch?v=ZVyIIyZJutM
 
 import { Button } from "react-bootstrap";
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+
+    const [householdCode, setHouseholdCode] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post('http://localhost:4000/api/login', { householdCode, phoneNumber, password });
+            console.log(response.data); // 'Login successful'
+            navigate('/household'); // redirect to household page
+        } catch (error) {
+            setError('Failed to login: ' + error.response.data);
+        }
+    }
+
     return (
         <div>
             {/* <h1>Login page</h1> */}
@@ -23,29 +46,28 @@ function Login() {
 
                                                 <h4 class="mt-1 mb-5 pb-1">Housemates</h4>
                                             </div>
-                                            <form>
+                                            <form onSubmit={handleSubmit}>
                                                 <p>Please login to your account</p>
 
                                                 <div data-mdb-input-init class="form-outline mb-4">
-                                                    <input type="householdCode" id="formLogin" class="form-control"
-                                                        placeholder="Household code" />
-                                                    <label class="form-label" for="formLogin">Household</label>
+                                                    <label class="form-label" for="formLogin">Household :</label>
+                                                    <input type="text" value={householdCode} onChange={(e) => setHouseholdCode(e.target.value)} placeholder="Household code" />
                                                 </div>
 
                                                 <div data-mdb-input-init class="form-outline mb-4">
-                                                    <input type="phoneNumber" id="formLogin" class="form-control"
-                                                        placeholder="Phone number" />
-                                                    <label class="form-label" for="formLogin">Phone number</label>
+                                                    <label class="form-label" for="formLogin">Phone number :</label>
+                                                    <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="Phone number" />
                                                 </div>
 
                                                 <div data-mdb-input-init class="form-outline mb-4">
-                                                    <input type="password" class="form-control" autocomplete="off" />
-                                                    <label class="form-label" for="formLogin">Password</label>
+                                                    <label class="form-label" for="formLogin">Password :</label>
+                                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                                                 </div>
 
                                                 <div class="text-center pt-1 mb-5 pb-1">
-                                                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="button">Log
-                                                        in</button>
+                                                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">
+                                                        Log in</button>
+                                                        {error && <p style={{ color: 'red' }}>{error}</p>}
                                                 </div>
 
                                                 <div class="d-flex align-items-center justify-content-center pb-4">

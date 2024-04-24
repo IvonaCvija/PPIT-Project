@@ -174,6 +174,28 @@ app.get(`/api/bill/:id`, async (req, res) => {
 //     res.json(bills);
 // })
 
+// handle POST for login
+app.post('/api/login', async (req, res) => {
+    const { householdCode, phoneNumber, password } = req.body;
+
+    try {
+        // look for account that matches the phoneNumber and householdCode
+        const account = await accountModel.findOne({ phoneNumber, householdCode });
+
+        // check if account exists and password matches
+        if (!account || account.password !== password) {
+            res.status(401).send('Wrong credentials. Please try again.');
+            return;
+        }
+
+        // successful login
+        res.status(200).send('Login successful');
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).send('Internal server error');
+    }
+});
+
 // handle GET request to '/api/bill' (FINDING ALL BILLS)
 app.get('/api/bill', async (req, res) => {
 
