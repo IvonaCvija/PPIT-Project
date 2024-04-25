@@ -85,6 +85,10 @@ function Login() {
                                                     <p class="mb-0 me-2">Are you not a member yet?</p>
                                                     <Button variant="btn btn-outline-danger" href="/addAccount">Create account</Button>
                                                 </div>
+                                                <div class="d-flex align-items-center justify-content-center pb-4">
+                                                    <p class="mb-0 me-2">Want to create a new household?</p>
+                                                    <Button variant="btn btn-outline-primary" href="/addHousehold">Create household</Button>
+                                                </div>
 
                                             </form>
                                         </div>

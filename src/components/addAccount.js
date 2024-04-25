@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Alert } from 'react-bootstrap';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function AddAccount() {
     // use useState hook for getting variables full name, phone number, password, household code
@@ -11,7 +12,7 @@ function AddAccount() {
     const [existingPhoneNumbers, setExistingPhoneNumbers] = useState([]);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         //  making GET request to get existing phone numbers to compare
@@ -52,7 +53,7 @@ function AddAccount() {
             .then(response => {
                 setSuccess("Successfully added account.");
                 console.log("Successfully added account:", response.data);
-                window.location.reload();
+                navigate('/login'); // redirect to login page
             })
             .catch(error => { // handle error
                 setError(error.response.data);

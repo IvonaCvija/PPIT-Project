@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Alert } from 'react-bootstrap';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function AddHousehold() {
     // use useState hook for getting variables household code and eircode
@@ -9,6 +10,7 @@ function AddHousehold() {
     const [existingData, setExistingData] = useState({ householdCodes: [], eircodes: [] });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         // making GET request to get existing codes to compare
@@ -49,7 +51,7 @@ function AddHousehold() {
             .then(response => {
                 setSuccess("Successfully added household.");
                 console.log("Successfully added household:", response.data);
-                window.location.reload();
+                navigate('/login');
             })
             .catch(error => {
                 setError(error.response.data);

@@ -13,7 +13,7 @@ import AddHousehold from './components/addHousehold';
 import Household from './components/household';
 import AddAccount from './components/addAccount';
 
-import Navbar from './Navbar';
+
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HouseholdCodeProvider } from './components/householdCodeContext';
