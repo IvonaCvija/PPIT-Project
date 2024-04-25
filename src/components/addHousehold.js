@@ -60,40 +60,52 @@ function AddHousehold() {
     }
 
     return (
-        <div>
-            <h1>New household</h1>
-            <br></br>
-            {/* alert for error/success message https://getbootstrap.com/docs/4.0/components/alerts/ */}
-            {error && <Alert variant="danger">{error}</Alert>}
-            {success && <Alert variant="success">{success}</Alert>}
-            {/* form for adding a new household, invoke onSubmit */}
-            <form onSubmit={handleSubmit}>
-
-                {/* getting input for household code */}
-                <div className="form-group">
-                    <input type="text" class="form-control"
-                        placeholder="Enter household code"
-                        value={householdCode}
-                        onChange={(e) => { setHouseholdCode(e.target.value) }} />
-                    <label>Household code</label>
+        <section class="h-100 bg-dark">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col">
+                        <div class="card card-registration my-4">
+                            <div class="row g-0">
+                                <div class="col-xl-6">
+                                    <div class="card-body p-md-5 text-black">
+                                        <h3 class="mb-5 text-uppercase">Create Household</h3>
+                                        {/* form for adding a new household, invoke onSubmit */}
+                                        <form onSubmit={handleSubmit}>
+                                            <div class="form-outline mb-4">
+                                                {/* getting input for household code */}
+                                                <input type="text" id="householdCode" class="form-control form-control-lg"
+                                                    placeholder="Enter household code" value={householdCode}
+                                                    onChange={(e) => setHouseholdCode(e.target.value)} />
+                                                <label class="form-label" for="householdCode">Household Code</label>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                                {/* getting input for eircode */}
+                                                <input type="text" id="eircode" class="form-control form-control-lg"
+                                                    placeholder="Enter eircode" value={eircode}
+                                                    onChange={(e) => setEircode(e.target.value)} />
+                                                <label class="form-label" for="eircode">Address (Eircode)</label>
+                                            </div>
+                                            {/* alert for error/success message https://getbootstrap.com/docs/4.0/components/alerts/ */}
+                                            {error && <div class="alert alert-danger" role="alert">{error}</div>}
+                                            {success && <div class="alert alert-success" role="alert">{success}</div>}
+                                            <div class="d-flex justify-content-end pt-3">
+                                                {/* button for submitting data */}
+                                                <button type="submit" class="btn btn-warning btn-lg">Create Household</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 d-none d-xl-block">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                        alt="Sample photo" class="img-fluid"
+                                        style={{borderTopRightRadius: '.25rem', borderBottomRightRadius: '.25rem'}} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                {/* getting input for eircode */}
-                <div className="form-group">
-                    <input type="text" class="form-control"
-                        placeholder="Enter eircode"
-                        value={eircode}
-                        onChange={(e) => { setEircode(e.target.value) }} />
-                    <label>Address(eircode)</label>
-                </div>
-
-                {/* button for submitting data */}
-                <div>
-                    <Button type="submit" value="ADDhousehold">Add household</Button>
-                </div>
-
-            </form>
-        </div>
+            </div>
+        </section>
     );
 }
 

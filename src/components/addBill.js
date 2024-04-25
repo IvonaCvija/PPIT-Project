@@ -48,75 +48,86 @@ function AddBill() {
     }
 
     return (
-        <div>
-            <h1>New bill</h1>
-            <br></br>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {success && <Alert variant="success">{success}</Alert>}
-            {/* form for adding a new bill, invoke onSubmit */}
-            <form onSubmit={handleSubmit}>
-
-                {/* getting input for name */}
-                <div className="form-group">
-                    <input type="text" class="form-control"
-                        placeholder="Electricity January/ Gas 20th May/ Cleaning supplies"
-                        value={name}
-                        onChange={(e) => { setName(e.target.value) }} />
-                    <label>Name</label>
+        <section class="h-100 bg-dark">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col">
+                        <div class="card card-registration my-4">
+                            <div class="row g-0">
+                                <div class="col-xl-6">
+                                    <div class="card-body p-md-5 text-black">
+                                        <h3 class="mb-5 text-uppercase">New bill</h3>
+                                        {/* form for adding a new bill, invoke onSubmit */}
+                                        <form onSubmit={handleSubmit}>
+    
+                                            {/* getting input for name */}
+                                            <div class="form-outline mb-4">
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="Electricity January/ Gas 20th May/ Cleaning supplies"
+                                                    value={name}
+                                                    onChange={(e) => { setName(e.target.value) }} />
+                                                <label class="form-label">Name</label>
+                                            </div>
+    
+                                            {/* getting input for price */}
+                                            <div class="form-outline mb-4">
+                                                <input type="number" step="0.01" class="form-control form-control-lg"
+                                                    placeholder="Enter price"
+                                                    value={price}
+                                                    onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        // allow only numbers and decimal points https://www.geeksforgeeks.org/how-to-restrict-input-box-to-allow-only-numbers-and-decimal-point-javascript/
+                                                        if (value === "" || /^\d*\.?\d*$/.test(value)) {
+                                                            setPrice(value);
+                                                        }
+                                                    }} />
+                                                <label class="form-label">Price</label>
+                                            </div>
+    
+                                            {/* getting input for member's name */}
+                                            <div class="form-outline mb-4">
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="Enter member's name"
+                                                    value={member}
+                                                    onChange={(e) => { setMember(e.target.value) }} />
+                                                <label class="form-label">Member</label>
+                                            </div>
+    
+                                            {/* getting input for bill status */}
+                                            <div class="form-outline mb-4">
+                                                <select
+                                                    class="form-control form-control-lg"
+                                                    value={status}
+                                                    onChange={(e) => { setStatus(e.target.value) }} >
+                                                    <option>Unpaid</option>
+                                                    <option>Paid</option>
+                                                </select>
+                                                <label class="form-label">Status</label>
+                                            </div>
+    
+                                            {/* getting input for household code */}
+                                            <div class="form-outline mb-4">
+                                                <input type="text" class="form-control form-control-lg"
+                                                    placeholder="Enter household code"
+                                                    value={householdCode}
+                                                    onChange={(e) => { setHouseholdCode(e.target.value) }} />
+                                                <label class="form-label">Household code</label>
+                                            </div>
+    
+                                            {/* button for submitting data */}
+                                            <div class="d-flex justify-content-end pt-3">
+                                                <button type="submit" class="btn btn-warning btn-lg">Add bill</button>
+                                            </div>
+    
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                {/* getting input for price */}
-                <div class="form-group" name="priceInput">
-                    <input type="number" step="0.01" class="form-control"
-                        placeholder="Enter price"
-                        value={price}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            // allow only numbers and decimal points https://www.geeksforgeeks.org/how-to-restrict-input-box-to-allow-only-numbers-and-decimal-point-javascript/
-                            if (value === "" || /^\d*\.?\d*$/.test(value)) {
-                                setPrice(value);
-                            }
-                        }} />
-                    <label>Price</label>
-                </div>
-
-                {/* getting input for member's name */}
-                <div className="form-group">
-                    <input type="text" class="form-control"
-                        placeholder="Enter member's name"
-                        value={member}
-                        onChange={(e) => { setMember(e.target.value) }} />
-                    <label>Member</label>
-                </div>
-
-                {/* getting input for bill status */}
-                <div className="form-group">
-                    <select
-                        className="form-control"
-                        value={status}
-                        onChange={(e) => { setStatus(e.target.value) }} >
-                        <option>Unpaid</option>
-                        <option>Paid</option>
-                    </select>
-                    <label>Status</label>
-                </div>
-
-                {/* getting input for household code */}
-                <div className="form-group">
-                    <input type="text" class="form-control"
-                        placeholder="Enter household code"
-                        value={householdCode}
-                        onChange={(e) => { setHouseholdCode(e.target.value) }} />
-                    <label>Household code</label>
-                </div>
-
-                {/* button for submitting data */}
-                <div>
-                    <Button type="submit" value="ADDbill">Add bill</Button>
-                </div>
-
-            </form>
-        </div>
+            </div>
+        </section>
     );
 }
 

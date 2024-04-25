@@ -61,65 +61,63 @@ function AddAccount() {
             });
     }
 
+    // design template from https://mdbootstrap.com/docs/standard/extended/registration/
     return (
-        <div>
-            <h1>Create account</h1>
-            <br></br>
-            {/* alert for error/success message https://getbootstrap.com/docs/4.0/components/alerts/ */}
-            {error && <Alert variant="danger">{error}</Alert>}
-            {success && <Alert variant="success">{success}</Alert>}
-            {/* form for adding a new account, invoke onSubmit */}
-            <form onSubmit={handleSubmit}>
-
-                {/* getting input for full name */}
-                <div className="form-group">
-                    <input type="text" class="form-control"
-                        placeholder="Enter full name"
-                        value={fName}
-                        onChange={(e) => { setFName(e.target.value) }} />
-                    <label>Name</label>
+        <section class="h-100 bg-dark">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col">
+                        <div class="card card-registration my-4">
+                            <div class="row g-0">
+                                <div class="col-xl-6 d-none d-xl-block">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
+                                        alt="Sample photo" class="img-fluid"
+                                        style={{borderTopLeftRadius: '.25rem', borderBottomLeftRadius: '.25rem'}} />
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="card-body p-md-5 text-black">
+                                        <h3 class="mb-5 text-uppercase">Create account</h3>
+                                        <form onSubmit={handleSubmit}>
+                                            <div class="form-outline mb-4">
+                                                <input type="text" id="fullName" class="form-control form-control-lg"
+                                                    placeholder="Full Name" value={fName} onChange={(e) => setFName(e.target.value)} />
+                                                <label class="form-label" for="fullName">Full Name</label>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                                <input type="text" id="phoneNumber" class="form-control form-control-lg"
+                                                    placeholder="Phone Number" value={phoneNumber} onChange={(e) => {
+                                                        const value = e.target.value;
+                                                        // allow only numbers and decimal points https://www.geeksforgeeks.org/how-to-restrict-input-box-to-allow-only-numbers-and-decimal-point-javascript/
+                                                        if (value === "" || /^[+]?[\d]*$/.test(value)) {
+                                                            setPhoneNumber(value);
+                                                        }
+                                                    }} />
+                                                <label class="form-label" for="phoneNumber">Phone Number</label>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                                <input type="password" id="password" class="form-control form-control-lg"
+                                                    placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                                <label class="form-label" for="password">Password</label>
+                                            </div>
+                                            <div class="form-outline mb-4">
+                                                <input type="text" id="householdCode" class="form-control form-control-lg"
+                                                    placeholder="Household Code" value={householdCode} onChange={(e) => setHouseholdCode(e.target.value)} />
+                                                <label class="form-label" for="householdCode">Household Code</label>
+                                            </div>
+                                            {error && <div class="alert alert-danger" role="alert">{error}</div>}
+                                            {success && <div class="alert alert-success" role="alert">{success}</div>}
+                                            <div class="d-flex justify-content-end pt-3">
+                                                <button type="submit" class="btn btn-warning btn-lg">Create Account</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                {/* getting input for phoneNumber */}
-                <div class="form-group">
-                    <input type="number" step="0.01" class="form-control"
-                        placeholder="Enter phone number"
-                        value={phoneNumber}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            // allow only numbers and decimal points https://www.geeksforgeeks.org/how-to-restrict-input-box-to-allow-only-numbers-and-decimal-point-javascript/
-                            if (value === "" || /^[+]?[\d]*$/.test(value)) {
-                                setPhoneNumber(value);
-                            }
-                        }} />
-                    <label>Phone number</label>
-                </div>
-
-                {/* getting input for password */}
-                <div className="form-group">
-                    <input type="password" class="form-control"
-                        placeholder="Enter password"
-                        value={password}
-                        onChange={(e) => { setPassword(e.target.value) }} />
-                    <label>Password</label>
-                </div>
-
-                {/* getting input for household code */}
-                <div className="form-group">
-                    <input type="text" class="form-control"
-                        placeholder="Enter household code"
-                        value={householdCode}
-                        onChange={(e) => { setHouseholdCode(e.target.value) }} />
-                    <label>Household code</label>
-                </div>
-
-                {/* button for submitting data */}
-                <div>
-                    <Button type="submit" value="ADDaccount">Create account</Button>
-                </div>
-
-            </form>
-        </div>
+            </div>
+        </section>
     );
 }
 
