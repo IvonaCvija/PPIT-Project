@@ -57,7 +57,8 @@ export default function UpdateBill(props) {
                     <input type="text" class="form-control"
                         placeholder="Electricity January/ Gas 20th May/ Cleaning supplies"
                         value={name}
-                        onChange={(e) => { setName(e.target.value) }} />
+                        readOnly // makes the field read-only 
+                        /> 
                     <label>Name</label>
                 </div>
 
@@ -66,13 +67,7 @@ export default function UpdateBill(props) {
                     <input type="number" step="0.01" class="form-control"
                         placeholder="Price"
                         value={price}
-                        onChange={(e) => {
-                            const value = e.target.value;
-                            // allow only numbers and decimal points https://www.geeksforgeeks.org/how-to-restrict-input-box-to-allow-only-numbers-and-decimal-point-javascript/
-                            if (value === "" || /^\d*\.?\d*$/.test(value)) {
-                                setPrice(value);
-                            }
-                        }} />
+                        readOnly />
                     <label>Price</label>
                 </div>
 
@@ -81,7 +76,7 @@ export default function UpdateBill(props) {
                     <input type="text" class="form-control"
                         placeholder="Member's name"
                         value={member}
-                        onChange={(e) => { setMember(e.target.value) }} />
+                        readOnly />
                     <label>Member</label>
                 </div>
 
@@ -102,7 +97,7 @@ export default function UpdateBill(props) {
                     <input type="text" class="form-control"
                         placeholder="Household code"
                         value={householdCode}
-                        onChange={(e) => { setHouseholdCode(e.target.value) }} />
+                        readOnly />
                     <label>Household code</label>
                 </div>
 

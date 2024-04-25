@@ -80,24 +80,27 @@ app.delete('/api/bill/:id', async (req, res) => {
     res.send(bill);
 })
 
-// handle POST request to '/api/bill' (CREATING BILL)
-app.post('/api/bill', (req, res) => {
-    // Logging the received data to the console
-    console.log(req.body);
+// handle POST request to '/api/bill' (CREATING BILL WITH EXISTING HOUSEHOLD(check if household with householdCode exists in collection))
+app.post('/api/bill', async (req, res) => {
+    const { name, price, member, status, householdCode } = req.body;
 
-    // Sending a response message
-    billModel.create({
-        name: req.body.name,
-        price: req.body.price,
-        member: req.body.member,
-        status: req.body.status,
-        householdCode: req.body.householdCode
-    })
-        .then(() => { res.send("Bill created") })
-        .catch((error) => {
+    try {
+        // check if householdCode exists in household collection
+        const existingHousehold = await householdModel.findOne({ householdCode });
+        if (!existingHousehold) {
+            // send error message if householdCode doesn't exist
+            return res.status(400).send("Household doesn't exist. Please enter valid household code.");
+        }
+
+        // create the bill if householdCode exists
+        const newBill = new billModel({ name, price, member, status, householdCode });
+        await newBill.save();
+        res.send("Bill created");
+    }
+        catch(error){
             console.error("Error adding bill:", error);
             res.status(500).send("Bill not created");
-        });
+        };
 })
 
 // handle POST request to '/api/household' (CREATING UNIQUE HOUSEHOLD(checking householdCode and eircode))
@@ -124,15 +127,15 @@ app.post('/api/household', async (req, res) => {
     }
 })
 
-// handle POST request to '/api/bill' (CREATING UNIQUE ACCOUNT(checking phoneNumber))
+// handle POST request to '/api/bill' (CREATING UNIQUE ACCOUNT(checking phoneNumber and household code))
 app.post('/api/account', async (req, res) => {
     const { fName, phoneNumber, password, householdCode } = req.body;
 
     try {
         // check if phoneNumber already exists
         const existingAccount = await accountModel.findOne({ phoneNumber });
-
-        if (existingAccount) { // Send error message if phoneNumber is not unique
+        // send error message if phoneNumber is not unique
+        if (existingAccount) { 
             return res.status(400).send("Phone number already exists. Please enter valid phone number.");
         }
 
