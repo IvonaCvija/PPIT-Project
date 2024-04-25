@@ -27,6 +27,7 @@ function Login() {
             const response = await axios.post('http://localhost:4000/api/login', { phoneNumber, password });
             
             if (response.data && response.data.householdCode) {
+                localStorage.setItem('householdCode', response.data.householdCode);
                 navigate(`/bills/${response.data.householdCode}`); // navigate to bills(with same household code)
                 // navigate(`/household/${response.data.householdCode}`); // navigate to household(accounts with same household code)
             } else {

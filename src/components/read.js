@@ -3,6 +3,7 @@ import Bills from "./bills";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import NavigationBar from "../Navbar";
 
 //Read component
 function Read() {
@@ -48,6 +49,7 @@ function Read() {
 
     return (
         <div>
+            <NavigationBar></NavigationBar>
             <h1>All bills for Household: {householdCode}</h1>
             {/* send bills and reload function as props to the Bills component */}
             <Bills myBills={data} Reload={ReloadData}></Bills>

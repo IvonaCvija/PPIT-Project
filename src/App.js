@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Login from './components/login';
@@ -13,52 +13,50 @@ import AddHousehold from './components/addHousehold';
 import Household from './components/household';
 import AddAccount from './components/addAccount';
 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Navbar from './Navbar';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HouseholdCodeProvider } from './components/householdCodeContext';
 
 function App() {
+
+  const [householdCode, setHouseholdCode] = useState(localStorage.getItem('householdCode') || null);
+
+  useEffect(() => {
+    // updating state when local storage changes
+    const handleStorageChange = () => {
+      setHouseholdCode(localStorage.getItem('householdCode'));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+  
+
   return (
-    <BrowserRouter>
-      {/* https://react-bootstrap.netlify.app/docs/components/navbar/#home */}
-      <Navbar expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="dark">
-        <Container>
-          <Navbar.Brand href="#home">Housemates App</Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="/login">Login</Nav.Link>
-              <Nav.Link href="/household">Household</Nav.Link>
-              <Nav.Link href="/bills">Bills</Nav.Link>
-              <NavDropdown title="Adding" id="basic-nav-dropdown">
-                <NavDropdown.Item href="/addHousehold">Add Household</NavDropdown.Item>
-                <NavDropdown.Item href="/addBill">Add Bill</NavDropdown.Item>
-                <NavDropdown.Item href="/addAccount">Create Account</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <HouseholdCodeProvider value={householdCode}>
+      <BrowserRouter>
 
-      <Routes>
-        <Route path='/' element={<Login></Login>}></Route>
-        <Route path='/login' element={<Login></Login>}></Route>
+        <Routes>
+          <Route path='/' element={<Login></Login>}></Route>
+          <Route path='/login' element={<Login></Login>}></Route>
 
-        <Route path='/bills' element={<Read></Read>}></Route>
-        <Route path='/addBill' element={<AddBill></AddBill>}></Route>
-        <Route path='/updateBill/:id' element={<UpdateBill></UpdateBill>}></Route>
+          <Route path='/bills' element={<Read></Read>}></Route>
+          <Route path='/addBill' element={<AddBill></AddBill>}></Route>
+          <Route path='/updateBill/:id' element={<UpdateBill></UpdateBill>}></Route>
 
-        <Route path='/addHousehold' element={<AddHousehold></AddHousehold>}></Route>
+          <Route path='/addHousehold' element={<AddHousehold></AddHousehold>}></Route>
 
-        <Route path='/bills/:householdCode' element={<Read></Read>}></Route>
-        <Route path='/household/:householdCode' element={<Household></Household>}></Route>
-        <Route path='/addAccount' element={<AddAccount></AddAccount>}></Route>
-      </Routes>
+          <Route path='/bills/:householdCode' element={<Read></Read>}></Route>
+          <Route path='/household/:householdCode' element={<Household></Household>}></Route>
+          <Route path='/addAccount' element={<AddAccount></AddAccount>}></Route>
+        </Routes>
 
-    </BrowserRouter>
-
+      </BrowserRouter>
+    </HouseholdCodeProvider>
   );
 }
 

@@ -4,6 +4,7 @@ import Accounts from "./accounts";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from 'react-router-dom'; // hook for accessing parameters of current route
+import NavigationBar from "../Navbar";
 
 function Household() {
 
@@ -28,6 +29,7 @@ function Household() {
 
     return (
         <div>
+            <NavigationBar></NavigationBar>
             <h1>Accounts for Household: {householdCode}</h1>
             <Accounts myAccounts={data}></Accounts>
         </div>
