@@ -199,12 +199,31 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// handle GET request to '/api/bill' (FINDING ALL BILLS)
-app.get('/api/bill', async (req, res) => {
+// // handle GET request to '/api/bill' (FINDING ALL BILLS)
+// app.get('/api/bill', async (req, res) => {
 
-    let bill = await billModel.find({});
-    res.json(bill);
-})
+//     let bill = await billModel.find({});
+//     res.json(bill);
+// })
+
+app.get('/api/bill', async (req, res) => {
+    const { householdCode } = req.query;
+
+    try {
+        let bills;
+        if (householdCode) {
+            // find bills with specific householdCode
+            bills = await billModel.find({ householdCode });  
+        } else {
+            // find all bills if no code is specified
+            bills = await billModel.find({});  
+        }
+        res.json(bills);
+    } catch (error) {
+        console.error("Error getting bills:", error);
+        res.status(500).send("Failed to get bills");
+    }
+});
 
 // // handle GET request to '/api/account' (FINDING ALL ACCOUNTS)
 // app.get('/api/account', async (req, res) => {

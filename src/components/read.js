@@ -2,16 +2,17 @@
 import Bills from "./bills";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 //Read component
 function Read() {
     const [data, setData] = useState([]);
+    // get household code from url
+    const { householdCode } = useParams(); 
 
     useEffect(
         () => {
-            // http://jsonblob.com/1229437506201444352 (from https://jsonblob.com)
-            // get data from jsonblob with axios (asynchronous operation)
-            axios.get('http://localhost:4000/api/bill')
+            axios.get(`http://localhost:4000/api/bill?householdCode=${householdCode}`)
                 .then(
                     // callback function handling response, getting entire json data
                     (response) => {
@@ -26,12 +27,12 @@ function Read() {
                         console.log('Failed to get bills:', error);
                     }
                 );
-        }, [] // the empty array stops the running of the effect after 1 response
+        }, [householdCode] // dependency array for householdCode, so effect runs again if householdCode changes
     );
 
     // reloading data by making another GET request
     const ReloadData = (e) => {
-        axios.get('http://localhost:4000/api/bill')
+        axios.get('http://localhost:4000/api/bill?householdCode=${householdCode}')
             .then(
                 // successful response
                 (response) => {
@@ -39,19 +40,16 @@ function Read() {
                     setData(response.data)
                 }
             )
-            .catch(
+            .catch(error => {
                 // error handling
-                (error) => {
-                    console.log(error);
-                }
-            );
+                console.log('Error reloading data:', error);
+            });
     }
 
     return (
         <div>
-            <h1>All bills</h1>
-            {/* show combined bills data(myBills(prop)) with bills component */}
-            {/* <Bills myBills={data}></Bills> */}
+            <h1>All bills for Household: {householdCode}</h1>
+            {/* send bills and reload function as props to the Bills component */}
             <Bills myBills={data} Reload={ReloadData}></Bills>
         </div>
     );

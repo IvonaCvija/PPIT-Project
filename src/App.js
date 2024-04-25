@@ -52,6 +52,7 @@ function App() {
 
         <Route path='/addHousehold' element={<AddHousehold></AddHousehold>}></Route>
 
+        <Route path='/bills/:householdCode' element={<Read></Read>}></Route>
         <Route path='/household/:householdCode' element={<Household></Household>}></Route>
         <Route path='/addAccount' element={<AddAccount></AddAccount>}></Route>
       </Routes>

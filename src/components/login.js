@@ -1,5 +1,6 @@
 // sources: - https://mdbootstrap.com/docs/standard/extended/login/
 // - https://www.youtube.com/watch?v=ZVyIIyZJutM
+// - https://legacy.reactjs.org/docs/context.html
 
 import { Button } from "react-bootstrap";
 import { useState } from 'react';
@@ -16,11 +17,18 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // don't continue if there's no phone num or password
+        if (!phoneNumber || !password) {
+            setError('Please enter both your phone number and password.');
+            return;
+        }
+
         try {
             const response = await axios.post('http://localhost:4000/api/login', { phoneNumber, password });
             
             if (response.data && response.data.householdCode) {
-                navigate(`/household/${response.data.householdCode}`);
+                navigate(`/bills/${response.data.householdCode}`); // navigate to bills(with same household code)
+                // navigate(`/household/${response.data.householdCode}`); // navigate to household(accounts with same household code)
             } else {
                 // case where householdCode isn't in response
                 throw new Error('No household code');
