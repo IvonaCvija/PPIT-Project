@@ -55,7 +55,7 @@ function AddHousehold() {
             .then(response => {
                 setSuccess("Successfully added household.");
                 console.log("Successfully added household:", response.data);
-                navigate('/login');
+                //navigate('/login');
             })
             .catch(error => {
                 setError(error.response.data);
@@ -101,7 +101,7 @@ function AddHousehold() {
                                             {/* buttons for submitting data and for going back*/}
                                             <div class="d-flex justify-content-end pt-3">
                                                 <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
-                                                <button type="submit" class="btn btn-warning btn-lg">Create Household</button>
+                                                <button type="submit" class="btn btn-warning btn-lg" onClick={goBack}>Create Household</button>
                                             </div>
                                         </form>
                                     </div>

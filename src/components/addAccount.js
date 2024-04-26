@@ -57,7 +57,7 @@ function AddAccount() {
             .then(response => {
                 setSuccess("Successfully added account.");
                 console.log("Successfully added account:", response.data);
-                navigate('/login'); // redirect to login page
+                //navigate('/login'); // redirect to login page
             })
             .catch(error => { // handle error
                 setError(error.response.data);
@@ -126,7 +126,7 @@ function AddAccount() {
                                             {/* buttons for submitting data and for going back*/}
                                             <div class="d-flex justify-content-end pt-3">
                                                 <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
-                                                <button type="submit" class="btn btn-warning btn-lg">Create Account</button>
+                                                <button type="submit" class="btn btn-warning btn-lg" onClick={goBack}>Create Account</button>
                                             </div>
                                         </form>
                                     </div>

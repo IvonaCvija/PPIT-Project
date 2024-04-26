@@ -14,6 +14,11 @@ export default function UpdateBill(props) {
     const [householdCode, setHouseholdCode] = useState('');
     const navigate = useNavigate();
 
+    // go to previous page
+    const goBack = () => {
+        navigate(-1);
+      };
+
     //useEffect Hook
     useEffect(
         () => {
@@ -45,7 +50,7 @@ export default function UpdateBill(props) {
         axios.put('http://localhost:4000/api/bill/' + id, newBill)
             .then((res) => {
                 console.log(res.data);
-                navigate('/bills');
+                //navigate('/bills');
             });
     }
 
@@ -118,7 +123,8 @@ export default function UpdateBill(props) {
     
                                             {/* button for submitting data */}
                                             <div class="d-flex justify-content-end pt-3">
-                                                <button type="submit" class="btn btn-warning btn-lg">Update bill</button>
+                                                <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
+                                                <button type="submit" class="btn btn-warning btn-lg" onClick={goBack}>Update bill</button>
                                             </div>
     
                                         </form>
