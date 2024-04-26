@@ -33,6 +33,12 @@ function AddHousehold() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // check if values are empty
+        if (!householdCode || !eircode) {
+            setError("Both Household code and Eircode must be entered.");
+            return;
+        }
+
         // check if values are unique before adding new household
         if (existingData.householdCodes.includes(householdCode) || existingData.eircodes.includes(eircode)) {
             setError("Household code or eircode already exists.");
@@ -55,6 +61,7 @@ function AddHousehold() {
             .then(response => {
                 setSuccess("Successfully added household.");
                 console.log("Successfully added household:", response.data);
+                goBack();
                 //navigate('/login');
             })
             .catch(error => {
@@ -101,15 +108,10 @@ function AddHousehold() {
                                             {/* buttons for submitting data and for going back*/}
                                             <div class="d-flex justify-content-end pt-3">
                                                 <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
-                                                <button type="submit" class="btn btn-warning btn-lg" onClick={goBack}>Create Household</button>
+                                                <button type="submit" class="btn btn-warning btn-lg">Create Household</button>
                                             </div>
                                         </form>
                                     </div>
-                                </div>
-                                <div class="col-xl-6 d-none d-xl-block">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
-                                        alt="Sample photo" class="img-fluid"
-                                        style={{ borderTopRightRadius: '.25rem', borderBottomRightRadius: '.25rem' }} />
                                 </div>
                             </div>
                         </div>

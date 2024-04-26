@@ -17,7 +17,7 @@ function BillObjects(props) {
                     <h4 class="card-text">{props.myBills.status}</h4>
                 </div>
                 <div class="card-footer">
-                    <Link to={'/updateBill/' + props.myBills._id} className='btn btn-secondary me-3' style={{ color: 'black' }}>Update</Link>
+                    <Link to={'/updateBill/' + props.myBills._id} className='btn btn-secondary me-3'>Update</Link>
                     {/* button to delete bill */}
                     <Button variant='secondary' onClick={
                         (e) => {

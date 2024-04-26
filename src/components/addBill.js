@@ -134,7 +134,7 @@ function AddBill() {
                                             {/* buttons for submitting data and for going back*/}
                                             <div class="d-flex justify-content-end pt-3">
                                                 <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
-                                                <button type="submit" class="btn btn-warning btn-lg" onClick={goBack}>Add bill</button>
+                                                <button type="submit" class="btn btn-warning btn-lg">Add bill</button>
                                             </div>
                                         </form>
                                     </div>

@@ -126,7 +126,6 @@ export default function UpdateBill(props) {
                                                 <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
                                                 <button type="submit" class="btn btn-warning btn-lg" onClick={goBack}>Update bill</button>
                                             </div>
-    
                                         </form>
                                     </div>
                                 </div>
