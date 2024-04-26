@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button, Alert } from 'react-bootstrap';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +12,11 @@ function AddAccount() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
+
+    // go to previous page
+    const goBack = () => {
+        navigate(-1);
+      };
 
     useEffect(() => {
         //  making GET request to get existing phone numbers to compare
@@ -77,12 +81,18 @@ function AddAccount() {
                                 <div class="col-xl-6">
                                     <div class="card-body p-md-5 text-black">
                                         <h3 class="mb-5 text-uppercase">Create account</h3>
+
+                                        {/* form for adding a new household, invoke onSubmit */}
                                         <form onSubmit={handleSubmit}>
+
+                                            {/* getting input for full name */}
                                             <div class="form-outline mb-4">
                                                 <input type="text" id="fullName" class="form-control form-control-lg"
                                                     placeholder="Full Name" value={fName} onChange={(e) => setFName(e.target.value)} />
                                                 <label class="form-label" for="fullName">Full Name</label>
                                             </div>
+
+                                            {/* getting input for phone number */}
                                             <div class="form-outline mb-4">
                                                 <input type="text" id="phoneNumber" class="form-control form-control-lg"
                                                     placeholder="Phone Number" value={phoneNumber} onChange={(e) => {
@@ -94,19 +104,28 @@ function AddAccount() {
                                                     }} />
                                                 <label class="form-label" for="phoneNumber">Phone Number</label>
                                             </div>
+
+                                            {/* getting input for password */}
                                             <div class="form-outline mb-4">
                                                 <input type="password" id="password" class="form-control form-control-lg"
                                                     placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                                                 <label class="form-label" for="password">Password</label>
                                             </div>
+
+                                            {/* getting input for household code */}
                                             <div class="form-outline mb-4">
                                                 <input type="text" id="householdCode" class="form-control form-control-lg"
                                                     placeholder="Household Code" value={householdCode} onChange={(e) => setHouseholdCode(e.target.value)} />
                                                 <label class="form-label" for="householdCode">Household Code</label>
                                             </div>
+
+                                            {/* alert for error/success message https://getbootstrap.com/docs/4.0/components/alerts/ */}
                                             {error && <div class="alert alert-danger" role="alert">{error}</div>}
                                             {success && <div class="alert alert-success" role="alert">{success}</div>}
+                                            
+                                            {/* buttons for submitting data and for going back*/}
                                             <div class="d-flex justify-content-end pt-3">
+                                                <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
                                                 <button type="submit" class="btn btn-warning btn-lg">Create Account</button>
                                             </div>
                                         </form>

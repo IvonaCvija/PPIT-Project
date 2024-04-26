@@ -3,7 +3,7 @@
 // - https://legacy.reactjs.org/docs/context.html
 
 import { Button } from "react-bootstrap";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,9 +39,13 @@ function Login() {
         }
     }
 
+    // useEffect(() => {
+    //     // clear householdCode from local storage everytime login component is open
+    //     localStorage.removeItem('householdCode');
+    // }, []);
+
     return (
         <div>
-
             <section class="h-100 gradient-form">
                 <div class="container py-5 h-100" style={{ backgroundColor: '#9be8ad' }}>
                     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -89,7 +93,6 @@ function Login() {
                                                     <p class="mb-0 me-10">Want to create a new household?</p>
                                                     <Button variant="btn btn-outline-primary" href="/addHousehold">Create household</Button>
                                                 </div>
-
                                             </form>
                                         </div>
                                     </div>

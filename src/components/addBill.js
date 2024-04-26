@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Alert } from 'react-bootstrap';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function AddBill() {
     // use useState hook for getting variables name, price, member, status, household code
@@ -11,7 +11,13 @@ function AddBill() {
     const [householdCode, setHouseholdCode] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
+    // go to previous page
+    const goBack = () => {
+        navigate(-1);
+      };
+    
     // handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -22,7 +28,6 @@ function AddBill() {
             " Member: " + member +
             " Status: " + status +
             " Household code: " + householdCode);
-
 
         // creating bill object from form values
         const bill = {
@@ -47,6 +52,7 @@ function AddBill() {
             });
     }
 
+    // design template from https://mdbootstrap.com/docs/standard/extended/registration/
     return (
         <section class="h-100 bg-dark">
             <div class="container py-5 h-100">
@@ -114,8 +120,9 @@ function AddBill() {
                                                 <label class="form-label">Household code</label>
                                             </div>
     
-                                            {/* button for submitting data */}
+                                            {/* buttons for submitting data and for going back*/}
                                             <div class="d-flex justify-content-end pt-3">
+                                                <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
                                                 <button type="submit" class="btn btn-warning btn-lg">Add bill</button>
                                             </div>
     

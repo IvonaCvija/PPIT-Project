@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Button, Alert } from 'react-bootstrap';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +10,11 @@ function AddHousehold() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
+
+    // go to previous page
+    const goBack = () => {
+        navigate(-1);
+      };
 
     useEffect(() => {
         // making GET request to get existing codes to compare
@@ -59,6 +63,7 @@ function AddHousehold() {
             });
     }
 
+    // design template from https://mdbootstrap.com/docs/standard/extended/registration/
     return (
         <section class="h-100 bg-dark">
             <div class="container py-5 h-100">
@@ -69,9 +74,11 @@ function AddHousehold() {
                                 <div class="col-xl-6">
                                     <div class="card-body p-md-5 text-black">
                                         <h3 class="mb-5 text-uppercase">Create Household</h3>
+                                        
                                         {/* form for adding a new household, invoke onSubmit */}
                                         <form onSubmit={handleSubmit}>
                                             <div class="form-outline mb-4">
+
                                                 {/* getting input for household code */}
                                                 <input type="text" id="householdCode" class="form-control form-control-lg"
                                                     placeholder="Enter household code" value={householdCode}
@@ -79,17 +86,21 @@ function AddHousehold() {
                                                 <label class="form-label" for="householdCode">Household Code</label>
                                             </div>
                                             <div class="form-outline mb-4">
+
                                                 {/* getting input for eircode */}
                                                 <input type="text" id="eircode" class="form-control form-control-lg"
                                                     placeholder="Enter eircode" value={eircode}
                                                     onChange={(e) => setEircode(e.target.value)} />
                                                 <label class="form-label" for="eircode">Address (Eircode)</label>
                                             </div>
+
                                             {/* alert for error/success message https://getbootstrap.com/docs/4.0/components/alerts/ */}
                                             {error && <div class="alert alert-danger" role="alert">{error}</div>}
                                             {success && <div class="alert alert-success" role="alert">{success}</div>}
+
+                                            {/* buttons for submitting data and for going back*/}
                                             <div class="d-flex justify-content-end pt-3">
-                                                {/* button for submitting data */}
+                                                <button type="button" className="btn btn-warning btn-lg me-2" onClick={goBack}>Back</button>
                                                 <button type="submit" class="btn btn-warning btn-lg">Create Household</button>
                                             </div>
                                         </form>
@@ -98,7 +109,7 @@ function AddHousehold() {
                                 <div class="col-xl-6 d-none d-xl-block">
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp"
                                         alt="Sample photo" class="img-fluid"
-                                        style={{borderTopRightRadius: '.25rem', borderBottomRightRadius: '.25rem'}} />
+                                        style={{ borderTopRightRadius: '.25rem', borderBottomRightRadius: '.25rem' }} />
                                 </div>
                             </div>
                         </div>

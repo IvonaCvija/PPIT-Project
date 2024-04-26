@@ -48,6 +48,8 @@ export default function UpdateBill(props) {
                 navigate('/bills');
             });
     }
+
+    // design template from https://mdbootstrap.com/docs/standard/extended/registration/
     return (
         <section class="h-100 bg-dark">
             <div class="container py-5 h-100">
